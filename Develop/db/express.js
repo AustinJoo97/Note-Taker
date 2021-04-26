@@ -17,9 +17,7 @@ app.get('/notes', (req, res) => {
 })
 
 app.get('/api/notes', (req, res) => {
-    let allNotes = fs.readFile(path.join(__dirname, './db.json'));
-
-    console.log(allNotes);
+    let allNotes = fs.readFileSync(path.join(__dirname, './db.json'));
 
     res.send(allNotes);
 })
@@ -27,11 +25,13 @@ app.get('/api/notes', (req, res) => {
 app.post('/api/notes', (req, res) => {
     let newNote = req.body;
 
-    let allNotes = fs.readFile('./db.json');
+    let allNotes = fs.readFileSync(path.join(__dirname, './db.json'));
+
+    allNotes = JSON.parse(allNotes);
 
     allNotes.push(newNote);
 
-    fs.writeFile('./db.json', allNotes);
+    fs.writeFileSync(path.join(__dirname, './db.json'), allNotes);
 
     res.send(newNote); 
 })
