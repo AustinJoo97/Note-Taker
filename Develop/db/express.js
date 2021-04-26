@@ -2,10 +2,10 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const app = express();
-const PORT = 8080;
+const PORT = process.env.PORT || 8080
+app.use(express.static(path.join(__dirname, '../public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
 
 
 app.get('/', (req, res) => {
@@ -17,13 +17,11 @@ app.get('/notes', (req, res) => {
 })
 
 app.get('/api/notes', (req, res) => {
-    let allNotes = fs.readFile('./db.json');
+    let allNotes = fs.readFile(path.join(__dirname, './db.json'));
 
-    // allNotes.forEach((note) => {
-    //     renderNoteList(note);
-    // })
+    console.log(allNotes);
 
-    res.json(allNotes);
+    res.send(allNotes);
 })
 
 app.post('/api/notes', (req, res) => {
@@ -35,7 +33,7 @@ app.post('/api/notes', (req, res) => {
 
     fs.writeFile('./db.json', allNotes);
 
-    res.json(newNote); 
+    res.send(newNote); 
 })
 
 app.listen(PORT, () => {console.log(`Listening at port ${PORT}`)})
