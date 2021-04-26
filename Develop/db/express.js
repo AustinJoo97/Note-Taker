@@ -29,6 +29,12 @@ app.post('/api/notes', (req, res) => {
 
     allNotes = JSON.parse(allNotes);
 
+    if(allNotes.length > 0 && allNotes[allNotes.length-1].id){
+        newNote.id = allNotes[allNotes.length-1].id+1
+    } else {
+        newNote.id = 1;
+    }
+
     allNotes.push(newNote);
 
     fs.writeFileSync(path.join(__dirname, './db.json'), JSON.stringify(allNotes));
