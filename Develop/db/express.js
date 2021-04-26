@@ -31,7 +31,7 @@ app.post('/api/notes', (req, res) => {
 
     allNotes.push(newNote);
 
-    fs.writeFileSync(path.join(__dirname, './db.json'), allNotes);
+    fs.writeFileSync(path.join(__dirname, './db.json'), JSON.stringify(allNotes));
 
     res.send(newNote); 
 })
