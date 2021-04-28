@@ -25,9 +25,9 @@ app.get('*', (req, res) => {
 app.post('/api/notes', (req, res) => {
     let newNote = req.body;
 
-    let allNotes = fs.readFileSync(path.join(__dirname, './db.json'));
+    let allNotes = JSON.parse(fs.readFileSync(path.join(__dirname, './db.json')));
 
-    allNotes = JSON.parse(allNotes);
+    // allNotes = JSON.parse(allNotes);
 
     if(allNotes.length > 0 && allNotes[allNotes.length-1].id){
         newNote.id = allNotes[allNotes.length-1].id+1
@@ -40,6 +40,20 @@ app.post('/api/notes', (req, res) => {
     fs.writeFileSync(path.join(__dirname, './db.json'), JSON.stringify(allNotes));
 
     res.send(newNote); 
+})
+
+app.delete('/api/notes/:id', (req, res) => {
+    let chosen = Number(req.params.id);
+    let allNotes = JSON.parse(fs.readFileSync(path.join(__dirname, './db.json')));
+
+    for(let i = 0; i < allNotes.length; i++){
+        if(allNotes[i].id === chosen){
+            allNotes.splice(i, 1);
+        }
+    }
+    fs.writeFileSync(path.join(__dirname, './db.json'), JSON.stringify(allNotes));
+
+    res.send();
 })
 
 app.listen(PORT, () => {console.log(`Listening at port ${PORT}`)})
