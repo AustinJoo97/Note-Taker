@@ -2,7 +2,7 @@
 Application utilizing Express.JS to create, save, and delete notes
 ## Deployed Site Link 
 
-N/a
+https://austins-simple-note-taker.herokuapp.com/
 
 
 ## Table of Contents
@@ -46,4 +46,4 @@ Please contact me with any questions, comments, or concerns regarding this repo 
 - Email: austinjoo1997@gmail.com
 
 ## Demonstration
-![NPM Demo]()
+![NPM Demo](./demo/noteTakerDemo.gif)
